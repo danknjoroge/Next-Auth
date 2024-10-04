@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const { Schema } = mongoose;
 
@@ -13,6 +14,14 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    resetToken:{
+      type: String,
+      required:false
+    },
+    resetTokenExpiry:{
+      type: Date,
+      required:false
+    }
   },
   { timestamps: true }
 );

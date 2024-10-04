@@ -26,30 +26,35 @@ const Login = () => {
     e.preventDefault();
 
     const email = e.target[0].value;
-    const password =e.target[1].value;
 
     if (!isEmailValid(email)) {
       setError("Email is Invalid")
       return
     }
 
-    if (!password || password.length < 8) {
-      setError("Password Must be at least 8 Characters")
-      return;
-    }
+    try {
+        const res = await fetch('/api/forget-password',{
+          method:'POST',
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body:JSON.stringify({
+            email,
+          })
+        })
+  
+        if(res.status === 400) setError(`Email: ${email}, Does Not Exist`)
+        if(res.status === 200){
+          setError("Email found");
+          router.push("/login");
+        }
+      } catch (error) {
+        setError("An Error Occured, Try Again");
+        console.log(error);
+        
+      }
 
-    const res = await signIn("credentials", {
-      redirect:false,
-      email,
-      password
-    })
 
-    if (res?.error) {
-      setError("Invalid Email or Password");
-      if (res.url) router.replace("/dashboard")
-    }else{
-      setError("")
-    }
 
   }
   if (sessionStatus === "loading") {
@@ -60,22 +65,16 @@ const Login = () => {
    sessionStatus !== "authenticated" && (
     <div className='flex min-h-screen flex-col items-center justify-between p-24'>
       <div className='p-8 rounded shadow-md w-96 bg-[#212121] '>
-        <h1 className='text-white font-bold mb-4 text-center'>LOGIN</h1>
+        <h1 className='text-white font-bold mb-4 text-center'>Forgot Password</h1>
 
         <form onSubmit={handleSubmit}  className='flex flex-col gap-4 items-center'>
-          <input type="email" className='rounded p-1 pl-2 outline-none' placeholder='Email' required/>
-          <input type="password"  className='rounded p-1 pl-2 outline-none' placeholder='Password' required/>
-
-          <button className='text-white font-bold bg-blue-600 hover:bg-blue-800 rounded px-3 p-1'>Login</button>
+          <input type="email" className='rounded p-1 pl-2 outline-none' placeholder='Input Email Address' required/>
+          <button className='text-white font-bold bg-blue-600 hover:bg-blue-800 rounded px-3 p-1'>Submit</button>
           <p className='mb-4 text-red-600 text-[16px]'>{error && error}</p>
         </form>
-        <Link href={'/forget-password'} className='hover:text-blue-700 text-blue-400'>Forgot Password?</Link>
-
-        <button onClick={()=>signIn("github")}>Login With Github</button>
-        <button onClick={()=>signIn("google")}>Login With Google</button>
-
+        
         <div className='text-center text-gray-500'>- OR -</div>
-      <Link href={'/register'} className='hover:text-blue-700 text-blue-400'>Dont have Account? Register!</Link>
+      <Link href={'/login'} className='hover:text-blue-700 text-blue-400'>Login Here</Link>
       
       </div>
     </div>
