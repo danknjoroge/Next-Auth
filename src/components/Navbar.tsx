@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {signOut, useSession } from 'next-auth/react';
+import { ModeToggle } from './DarkModeToggle';
 
 const Navbar = () => {
   const {data:session} = useSession();
@@ -25,6 +26,7 @@ const Navbar = () => {
               <button onClick={()=> signOut()}>Sign Out</button>
               </>
             ) }
+            <ModeToggle/>
             
             </div> 
             
