@@ -42,3 +42,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [MONGO_URI=]
 - [GITHUB_ID=]
 - [GITHUB_SECRET=]
+## NODEMAILER INFO
+- [NEXT_PUBLIC_EMAIL_PROVIDER=gmail | OUTLOOK]
+- [NEXT_PUBLIC_BURNER_USERNAME=] the sending email for nodemailer.
+- [NEXT_PUBLIC_BURNER_PASSWORD=]password generated from the sending email.
+- [NEXT_PUBLIC_PERSONAL_EMAIL=]the email where you want the reply to go to.
