@@ -5,10 +5,20 @@ import React, { useEffect, useState } from 'react'
 import { useSession, signIn } from "next-auth/react"
 
 
-const ForgetPassword = () => {
+const ResetPassword = ({params}: any) => {
   const [error, setError] = useState("");
+  const [verified, setVerified] = useState(false);
+  const [user, setUser] = useState(null);
+
   const router = useRouter();
   const {data: session, status: sessionStatus}= useSession()
+
+  // useEffect(()=>{
+
+  // }, [params.token])
+
+  console.log(params);
+  
 
   useEffect(()=>{
     if(sessionStatus === "authenticated"){
@@ -82,4 +92,4 @@ const ForgetPassword = () => {
   )
 }
 
-export default ForgetPassword
+export default ResetPassword
